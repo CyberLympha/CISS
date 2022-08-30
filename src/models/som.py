@@ -176,10 +176,10 @@ class SOM:
         plt.show()
     
     def save_model(self, path):
-        dump(self.model, path)
+        dump(self.model, f'{path}.joblib')
 
     def load_model(self, path):
-        self.model = load(path)
+        self.model = load(f'{path}.joblib')
 
     def show_bar(self, size):
         bar = IntProgress(

@@ -34,10 +34,10 @@ class OCSVM:
         return anomalies_predict
 
     def save_model(self, path):
-        dump(self.model, path)
+        dump(self.model, f'{path}.joblib')
 
     def load_model(self, path):
-        self.model = load(path)
+        self.model = load(f'{path}.joblib')
 
 
 class LOF:
@@ -88,10 +88,10 @@ class LOF:
         plt.show()
 
     def save_model(self, path):
-        dump(self.model, path)
+        dump(self.model, f'{path}.joblib')
 
     def load_model(self, path):
-        self.model = load(path)
+        self.model = load(f'{path}.joblib')
 
 class iForest:
     def __init__(self, n_estimators=50, contamination=0.001):
@@ -137,7 +137,7 @@ class iForest:
         return grid_search.best_estimator_
 
     def save_model(self, path):
-        dump(self.model, path)
+        dump(self.model, f'{path}.joblib')
 
     def load_model(self, path):
-        self.model = load(path)
+        self.model = load(f'{path}.joblib')

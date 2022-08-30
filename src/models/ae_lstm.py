@@ -80,8 +80,8 @@ class AE_LSTM:
         return self.model.predict(x_test)
     
     def save_model(self, path):
-        dump(self.model, path)
+        self.model.save(f'{path}.h5')
 
     def load_model(self, path):
-        self.model = load(path)
+        self.model = load(f'{path}.h5')
 
