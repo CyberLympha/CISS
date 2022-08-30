@@ -25,9 +25,9 @@ class Predictor:
         self.load_model()
         
     def load_model(self):
-        model_file = f'{MODEL_STORE_PATH}{self.descr}.joblib'
+        model_file = f'{MODEL_STORE_PATH}{self.descr}'
                    
-        if self.resave_model or not os.path.exists(model_file):
+        if self.resave_model or not (os.path.exists(f'{model_file}.h5') or os.path.exists(f'{model_file}.joblib')):
 
             if self.resave_model: 
                 print(f"{str(datetime.now())}: refit model...")

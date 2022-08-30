@@ -8,15 +8,13 @@ def plot_result(data, y_test, y_pred, descr):
 
     plt.plot(data, alpha=0.5)
 
-    anomaly_idxs = data.iloc[np.where(y_test==1)].index
-    anomaly_idxs_pred = data.iloc[np.where(y_pred==1)].index
-
-    plt.plot()
+    anomaly_idxs = np.where(y_test==1)
+    anomaly_idxs_pred = np.where(y_pred==1)
     
-    plt.scatter(anomaly_idxs, 
-                [2000]*len(anomaly_idxs), c='r', label='anomaly')
-    plt.scatter(anomaly_idxs_pred, 
-                [2100]*len(anomaly_idxs_pred), c='blue', label=descr)
+    plt.scatter(data.iloc[anomaly_idxs].index, 
+                [2000]*len(anomaly_idxs[0]), c='r', label='anomaly')
+    plt.scatter(data.iloc[anomaly_idxs_pred].index, 
+                [2100]*len(anomaly_idxs_pred[0]), c='blue', label=descr)
     
     plt.legend()
     plt.title(f'{descr}. Результаты выявления аномалий')

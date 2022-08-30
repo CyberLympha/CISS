@@ -43,9 +43,10 @@ def create_sequences(values, time_steps):
 
     return np.stack(output)
 
-def get_traintest(df_train, df_test, reshape=False, resample_rate = None,
-                    window_size=None, label_name='anomaly',
-                    scaler='Standard'):
+def get_traintest(df_train, df_test, 
+                  label_dict = None,
+                  reshape=False, resample_rate = None,
+                  window_size=None, scaler='Standard'):
     
     print(f'Scaling... ({scaler})')
     if scaler == 'Standard':
@@ -55,10 +56,15 @@ def get_traintest(df_train, df_test, reshape=False, resample_rate = None,
 
     scaler.fit(df_train)
     
-    df_label = df_test.pop(label_name)
+    df_label = df_test.pop('anomaly')
+    if label_dict != None:    
+        y_test = np.array([label_dict[x] for x in df_label.values])
+    
+    else:
+        y_test = np.array(df_label.values)
+
     
     x_train = scaler.transform(df_train.dropna())
-    y_test = np.array([0 if y==1 else 1 for y in df_label.values])
     x_test = scaler.transform(df_test)
         
     print(f'Количество аномалий: {(sum(y_test) / y_test.shape[0] * 100):.1f}%\n')
