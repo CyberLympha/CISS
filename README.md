@@ -13,5 +13,5 @@ Preparation to CISS-2022 competition in Singapour
 | LSTM-AE| 64-32-32-64<br>window_size=30<br>resampling=1m                | 5977      | 0.00 | 0.88     | 0.00      | 0.00  |
 | LSTM-AE|                                                               | 800       | 0.00 | 0.88     | 0.60      | 0.00  |
 | LSTM-AE|                                                               | 400       | 0.74 | 0.95     | 0.98      | 0.59  |
-| SOM    | 8x8<br>sigma=2.0<br>learning_rate=0.5                         | -         | 0.74 | 0.95     | 0.98      | 0.59  |
+| SOM    | 8x8<br>sigma=2.0<br>learning_rate=0.5                         | 784       | 0.00 | 0.88     | 0.00      | 0.00  |
 | SOM    |                                                               | 220       | 0.74 | 0.95     | 0.98      | 0.59  |
