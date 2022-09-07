@@ -1,10 +1,9 @@
 from tensorflow import keras
 from tensorflow.keras.optimizers import SGD
 from tensorflow.keras import Model
-from tensorflow.keras.models import Sequential
+from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import LSTM, Dense, Input, TimeDistributed, Dropout, RepeatVector
 
-from joblib import dump, load
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -83,5 +82,5 @@ class AE_LSTM:
         self.model.save(f'{path}.h5')
 
     def load_model(self, path):
-        self.model = load(f'{path}.h5')
+        self.model = load_model(f'{path}.h5')
 
