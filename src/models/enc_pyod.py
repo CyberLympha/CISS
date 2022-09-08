@@ -4,38 +4,35 @@ from pyod.models.auto_encoder import AutoEncoder
 
 
 class AutoEnc:
-    def __init__(self, x_train):
-        self.anomaly_threshold = None
-        self.model = AutoEncoder(hidden_neurons=[len(x_train), 25, 5, 25, len(x_train)], epochs=5)
+    def __init__(self, x_train, epochs=None):
+        if epochs is None:
+            self.epochs = 5
+        else:
+            self.epochs = epochs
+        self.model = AutoEncoder(hidden_neurons=[len(x_train), 25, 5, 25, len(x_train)], epochs=self.epochs)
 
     def fit(self, data, **kwargs):
         self.model.fit(data)
 
     def get_anomalies(self, x_train, x_test, threshold=None, **kwargs):
-        anomalies_predict = self.model.predict(x_test)
 
         if threshold != None:
-            self.anomaly_threshold = threshold
-        else:
-            train_predict, self.anomaly_threshold = self.get_train_threshold(x_train)
-            self.plot_score(train_predict, title='train dataframe score')
+            self.model.threshold_ = threshold
 
-        self.plot_score(self.model.decision_function(x_test), title='test dataframe score')
+        train_predict = self.model.decision_function(x_train)
+        print(f'''Tthreshold - {self.model.threshold_}''')
+
+        self.plot_score(train_predict, title='train dataframe score', flag=False)
+
+        anomalies_predict = self.model.predict(x_test)
+        self.plot_score(self.model.decision_function(x_test), title='test dataframe score', flag=True)
 
         return anomalies_predict
 
-    def get_train_threshold(self, x_train, print_results=True):
-        train_predict = self.model.decision_function(x_train)
-        threshold = self.model.threshold_
-        
-        if print_results:
-            print(f'''Tthreshold - {self.model.threshold_}''')
-
-        return train_predict, threshold
-
-    def plot_score(self, data, title=''):
+    def plot_score(self, data, title='', flag=None):
         plt.plot(data)
-        plt.hlines(self.anomaly_threshold, 0, len(data), color='red')
+        if flag:
+            plt.hlines(self.model.threshold_, 0, len(data), color='red')
         plt.title(title)
         plt.show()
 
