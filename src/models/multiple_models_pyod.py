@@ -1,20 +1,20 @@
 import matplotlib.pyplot as plt
 from joblib import dump, load
-from pyod.models.mo_gaal import MO_GAAL
+from pyod.models.suod import SUOD
 
 
-class MGAAL:
-    """
-    Multi-Objective Generative Adversarial Active Learning.
-    MO_GAAL directly generates informative potential outliers to assist
-    the classifier in describing a boundary that can separate outliers
-    from normal data effectively.
-    link - https://github.com/leibinghe/GAAL-based-outlier-detection
-    """
+class SU_OD:
+    def __init__(self, base_estimators, n_jobs=2, combination='average'):
+        self.detector_list = base_estimators
+        self.n_jobs = n_jobs
+        self.combination = combination
 
-    def __init__(self):
-        self.anomaly_threshold = None
-        self.model = MO_GAAL(contamination=0.2, stop_epochs=2)
+        # decide the number of parallel process, and the combination method
+        # then clf can be used as any outlier detection model
+        self.model = SUOD(base_estimators=self.detector_list,
+                          n_jobs=self.n_jobs,
+                          combination=self.combination,
+                          verbose=True)
 
     def fit(self, data, **kwargs):
         self.model.fit(data)
