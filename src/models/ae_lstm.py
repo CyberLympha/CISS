@@ -53,7 +53,6 @@ class AE_LSTM:
         
         np.place(anomalies_predict, test_predict_error <= self.anomaly_threshold, [0])
         np.place(anomalies_predict, test_predict_error > self.anomaly_threshold, [1])
-        print(anomalies_predict.shape)
 
         return anomalies_predict
 
