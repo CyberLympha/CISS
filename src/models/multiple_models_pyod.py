@@ -14,7 +14,7 @@ class SU_OD:
         self.model = SUOD(base_estimators=self.detector_list,
                           n_jobs=self.n_jobs,
                           combination=self.combination,
-                          verbose=True)
+                          verbose=False)
 
     def fit(self, data, **kwargs):
         self.model.fit(data)
